@@ -1,0 +1,42 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react-hooks"],
+  "rules": {
+    "react/jsx-max-props-per-line": 1,
+    "semi": 2,
+    "no-console": "warn",
+    "indent": ["error", "tab"],
+    "react/jsx-indent": ["error", "tab"],
+    "react/jsx-indent-props": ["error", "tab"],
+    "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [".js", ".jsx"]
+        }
+      ],
+      "operator-linebreak": 0,
+      "import/no-unresolved": 0,
+      "no-tabs": 0,
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "ignore"
+        }
+      ]
+  }
+}
