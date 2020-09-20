@@ -1,13 +1,25 @@
 import React,{Component} from "react";
-import Settings from "./components/Settings/Settings";
+import styled from "styled-components";
+import Settings from "./container/Settings/Settings";
+
+const StyledDiv = styled.div`
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #EDF5E1;
+`;
 
 class App extends Component{
 	render(){
 		return(
-			<div>
+			<StyledDiv>
 				<Settings />
-				<p>aa</p>
-			</div>
+			</StyledDiv>
 		);
 	}
 }
