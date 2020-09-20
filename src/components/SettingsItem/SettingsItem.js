@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import 'font-awesome/css/font-awesome.min.css';
 
 const StyledDiv = styled.div`
 	position: absolute;
