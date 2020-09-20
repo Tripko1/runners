@@ -13,6 +13,7 @@ const StyledDiv = styled.div`
     border-radius: 8px;
     padding: 2px;
     overflow: hidden;
+    z-index: 1;
 `;
 
 const dropdownMenu = (props) => {
@@ -20,7 +21,7 @@ const dropdownMenu = (props) => {
         <StyledDiv>
             <DropdownItem icon="fa fa-map-marker">Change start location</DropdownItem>
             <DropdownItem icon="fa fa-arrows-alt">Change map size</DropdownItem>
-            <DropdownItem icon="fa fa-sitemap">Algoritams</DropdownItem>
+            <DropdownItem icon="fa fa-sitemap">Algorithms</DropdownItem>
         </StyledDiv>
     )
 }

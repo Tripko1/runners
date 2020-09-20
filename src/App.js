@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import styled from "styled-components";
-import Settings from "./container/Settings/Settings";
+import MainContainer from "./container/MainContainer/MainContainer";
 
 const StyledDiv = styled.div`
   height: 100%;
@@ -18,7 +18,7 @@ class App extends Component{
 	render(){
 		return(
 			<StyledDiv>
-				<Settings />
+				<MainContainer/>
 			</StyledDiv>
 		);
 	}
