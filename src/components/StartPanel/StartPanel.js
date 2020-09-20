@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Settings from "../../container/Settings/Settings";
+import Matrix from "../Matrix/Matrix";
 
 const StyledDiv = styled.div`
     width: 580px;
@@ -36,6 +37,15 @@ const startPanel = (props) => {
         <StyledDiv>
             <StyledDivContent>
                 <Settings />
+                <Matrix 
+                    m={props.m}
+                    n={props.n}
+                    startX={props.startX}
+                    startY={props.startY}
+                    endX={props.endX}
+                    endY={props.endY}
+                    matrix={props.matrix}
+                />
             </StyledDivContent>
         </StyledDiv>
     )
