@@ -13,11 +13,7 @@ const StyledDiv = styled.div`
     white-space: nowrap;
 
     @media(max-width: 1001px){
-        min-width: 370px;
-    }
-
-    @media(max-width: 375px){
-        min-width: 342px;
+        min-width: 400px;
     }
 `;
 

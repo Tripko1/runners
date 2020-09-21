@@ -4,6 +4,11 @@ import MatrixRow from "./MatrixRow/MatrixRow";
 
 const StyledDiv = styled.div`
     margin: auto;
+    width: 400px;
+
+    @media(max-width: 1001px){
+        min-width: 400px;
+    }
 `;
 
 const matrix = (props) => {

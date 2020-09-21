@@ -6,7 +6,7 @@ import RunnersPanel from "../../components/RunnersPanel/RunnersPanel";
 import Modal from "../../components/UI/Modal/Modal";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import ChangePositions from "../../components/ChangePositions/ChangePositions";
-import ChangeMatrixSize from "../../components/ChangeMatrixSize/ChangeMatrixSize";
+import ChangeMatrixSize from "../ChangeMatrixSize/ChangeMatrixSize";
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/index";
 
@@ -61,23 +61,27 @@ class MainContainer extends Component{
       }
 
     generateRandomPosition = () => {
-        const Xstart = this.getRandomInt(this.props.n);
-        const Ystart = this.getRandomInt(this.props.m);
+        const Xstart = this.getRandomInt(this.props.m);
+        const Ystart = this.getRandomInt(this.props.n);
         let Xend,Yend;
         while(1){
-            Xend = this.getRandomInt(this.props.n);
-            Yend = this.getRandomInt(this.props.m);
+            Xend = this.getRandomInt(this.props.m);
+            Yend = this.getRandomInt(this.props.n);
             if(Xstart !== Xend || Ystart !== Yend){
                 break;
             }
         }
         this.props.onGetRandomPositions(Xstart,Ystart,Xend,Yend);
-        this.closeModalForLocation();
+        setTimeout(() => {
+            this.closeModalForLocation();
+        }, 1100);
     }
 
     render(){
-        let mainContent = <Spinner />;
-
+        let spinner = null;
+        if(this.props.loading){
+            spinner = <Spinner />;
+        }
         const modalChangeLoaction = (
             <Modal
                 show={this.state.showLocation}
@@ -86,6 +90,7 @@ class MainContainer extends Component{
                 <ChangePositions 
                     modalClosed={this.closeModalForLocation}
                     generateRandomPosition={this.generateRandomPosition}
+                    loading={this.props.loading}
                 />
             </Modal>
         )
@@ -97,6 +102,9 @@ class MainContainer extends Component{
             >
                 <ChangeMatrixSize 
                     modalClosed={this.closeModalForSize}
+                    onChangeMatrixDimension={this.props.onChangeMatrixDimension}
+                    onGetRandomPositions={this.props.onGetRandomPositions}
+                    getRandomInt={this.getRandomInt}
                 />
             </Modal>
         )
@@ -110,9 +118,10 @@ class MainContainer extends Component{
             </Modal>
         )
 
-        if(!this.props.loading){
-            mainContent = (
-                <Fragment>
+        return(
+            <Fragment>
+                {spinner}
+                <StyledMain>
                     <StartPanel 
                         m={this.props.m}
                         n={this.props.n}
@@ -130,14 +139,8 @@ class MainContainer extends Component{
                     {modalChangeLoaction}
                     {modalChangeSize}
                     {modalChangeAlgorithms}
-                </Fragment>
-            )
-        }
-
-        return(
-            <StyledMain>
-                {mainContent}
-            </StyledMain>
+                </StyledMain>
+            </Fragment>
         )
     }
 }
@@ -157,7 +160,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        onGetRandomPositions: (Xstart,Ystart,Xend,Yend) => dispatch(actions.getRandomPositions(Xstart,Ystart,Xend,Yend))
+        onGetRandomPositions: (Xstart,Ystart,Xend,Yend,m,n) => dispatch(actions.getRandomPositions(Xstart,Ystart,Xend,Yend)),
+        onChangeMatrixDimension: (rows,columns) => dispatch(actions.changeMatrixDimension(rows,columns))
     }
 }
 

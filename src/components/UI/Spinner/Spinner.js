@@ -13,14 +13,17 @@ const rotate360 = keyframes`
 const StyledDiv = styled.div`
     animation: ${rotate360} 1s linear infinite;
     transform: translateZ(0);
-  
-    border-top: 2px solid #379683;
-    border-right: 2px solid #379683;
-    border-bottom: 2px solid #379683;
-    border-left: 4px solid black;
+    position: absolute;
+    top: 40px;
+    left: calc(50% - 30px);
+    z-index: 1;
+    border-top: 4px solid #5cdb95;
+    border-right: 4px solid #5cdb95;
+    border-bottom: 4px solid #5cdb95;
+    border-left: 8px solid #379683;
     background: transparent;
-    width: 44px;
-    height: 44px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 `;
 
