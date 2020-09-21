@@ -1,4 +1,5 @@
 export {
     getRandomPositions,
-    changeMatrixDimension
+    changeMatrixDimension,
+    selectAlgorithms
 } from "./main";

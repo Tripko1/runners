@@ -24,6 +24,7 @@ const matrixRow = (props) => {
                         key={i++} 
                         value={item}
                         height={height}
+                        color={item === 1 ? "#edf5e1" : item === 2 ? "black" : "#379683"}
                     />)
             }
         </div>

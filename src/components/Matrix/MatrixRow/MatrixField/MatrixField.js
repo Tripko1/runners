@@ -23,8 +23,9 @@ const matrixField = (props) => {
                 height={props.height}
                 value={props.value}
             >
-                {props.value === 1 ? <StyledI color="#edf5e1" className="fa fa-flag"/> : 
-                    props.value === 2 ? <StyledI color="black" className="fa fa-flag-checkered"/> : null
+                {props.value === 1 ? <StyledI color={props.color} className="fa fa-flag"/> : 
+                    props.value === 2 ? <StyledI color={props.color} className="fa fa-flag-checkered"/> :
+                    props.value === 3 ? <StyledI color={props.color} className="fa fa-tree"/> : null
                 }
             </StyledDiv>
     )
