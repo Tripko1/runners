@@ -1,4 +1,4 @@
-import React from "react";
+import React,{Fragment} from "react";
 import styled from "styled-components";
 
 const StyledDiv = styled.div`
@@ -34,15 +34,29 @@ const StyledButton = styled.button`
     }
 `;
 
+const StyledI = styled.i`
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #944317;
+    cursor: pointer;
+
+    &:hover{
+        color: tomato;
+    }
+`;
+
 const changePositions = (props) => {
     return (
-        <StyledDiv>
-            <StyledH1>Get random Start and End position</StyledH1>
-            <StyledDivForButton>
-                <StyledButton btnType="Success" onClick={() => props.generateRandomPosition()}>Random Generator</StyledButton>
-                <StyledButton btnType="Danger" onClick={() => props.modalClosed()}>Cancel</StyledButton>
-            </StyledDivForButton>
-        </StyledDiv>
+        <Fragment>
+            <StyledI className="fa fa-window-close" onClick={() => props.modalClosed()}/>
+            <StyledDiv>
+                <StyledH1>Get random Start and End position</StyledH1>
+                <StyledDivForButton>
+                    <StyledButton btnType="Success" onClick={() => props.generateRandomPosition()}>Random Generator</StyledButton>
+                </StyledDivForButton>
+            </StyledDiv>
+        </Fragment>
     )
 }
 

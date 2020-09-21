@@ -5,7 +5,7 @@ const StyledDiv = styled.div`
     float: left;
     width: ${props => props.height - 2}px;
     height: ${props => props.height - 2}px;
-    background-color: ${props => props.value === 0 ? "#ccc" : props.value === 1 ? "#379683" : props.value === 2 ? "#379683" : "red"};
+    background-color: ${props => props.value === 0 ? "#ccc" : props.value === 1 ? "#5cdb95" : props.value === 2 ? "#5cdb95" : "red"};
     border: 1px solid #379683;
     border-radius: 5px;
     display: flex;
@@ -19,14 +19,14 @@ const StyledI = styled.i`
 
 const matrixField = (props) => {
     return(
-        <StyledDiv 
-            height={props.height}
-            value={props.value}
-        >
-            {props.value === 1 ? <StyledI color="#edf5e1" className="fa fa-flag"/> : 
-                props.value === 2 ? <StyledI color="black" className="fa fa-flag-checkered"/> : null
-            }
-        </StyledDiv>
+            <StyledDiv 
+                height={props.height}
+                value={props.value}
+            >
+                {props.value === 1 ? <StyledI color="#edf5e1" className="fa fa-flag"/> : 
+                    props.value === 2 ? <StyledI color="black" className="fa fa-flag-checkered"/> : null
+                }
+            </StyledDiv>
     )
 }
 

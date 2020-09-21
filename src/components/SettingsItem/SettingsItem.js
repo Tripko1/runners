@@ -7,7 +7,7 @@ const StyledDiv = styled.div`
 	right: 10px;
 	width: 30px;
 	height: 30px;
-	background-color: #5CDB95;
+	background-color: #379683;
 	border-radius: 50%;
 	padding: 5px;
 	display: flex;
@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
     cursor: pointer;
     
     &:hover{
-        background-color: #379683;
+        background-color: #5CDB95;
       }
 `;
 

@@ -25,3 +25,26 @@ export const getRandomPositions = (Xstart,Ystart,Xend,Yend) => {
         }, 1000);
     }
 }
+
+export const changeMatrixDimension_Start = () => {
+    return{
+        type: actionTypes.CHANGE_MATRIX_DIMENSION_START
+    }
+}
+
+export const changeMatrixDimension_Success = (rows,columns) => {
+    return{
+        type: actionTypes.CHANGE_MATRIX_DIMENSION_SUCCESS,
+        rows: rows,
+        columns: columns
+    }
+}
+
+export const changeMatrixDimension = (rows,columns) => {
+    return dispatch => {
+        dispatch(changeMatrixDimension_Start());
+        setTimeout(() => {
+            dispatch(changeMatrixDimension_Success(rows,columns));
+        }, 1000);
+    }
+}

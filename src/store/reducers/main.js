@@ -15,21 +15,20 @@ const initialState = {
 }
 
 const getRandomStart = (state,action) => {
-    return updateObject(state, { loading: true, })
+    return updateObject(state, { loading: true })
 }
 
 const setMatrix = (state,action) => {
-    let pomMatrix = [...state.matrix]
-    pomMatrix[state.startX][state.startY] = 0;
-    pomMatrix[state.endX][state.endY] = 0;
-
-    pomMatrix[action.Xstart][action.Ystart] = 1;
-    pomMatrix[action.Xend][action.Yend] = 2;
-
-    const len = state.barrier.length;
-    for(let i=0; i<len; i++){
-        pomMatrix[state.barrier[i].x][state.barrier[i].y] = 0;
+    let pomMatrix = [];
+    for(let i=0; i<state.n; i++){
+        pomMatrix.push([]);
+        for(let j=0; j<state.m; j++){
+            pomMatrix[i].push(0);
+        }
     }
+
+    pomMatrix[action.Ystart][action.Xstart] = 1;
+    pomMatrix[action.Yend][action.Xend] = 2;
     return pomMatrix;
 }
 
@@ -45,12 +44,28 @@ const getRandomSuccess = (state,action) => {
     })
 }
 
+const matDimensionStart = (state,action) => {
+    return updateObject(state, { loading: true })
+}
+
+const matDimensionSuccess = (state,action) => {
+    return updateObject(state, {
+        loading: false,
+        n: action.rows,
+        m: action.columns
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_RANDOM_POSITIONS_START:
             return getRandomStart(state,action);
         case actionTypes.GET_RANDOM_POSITIONS_SUCCESS:
             return getRandomSuccess(state,action);
+        case actionTypes.CHANGE_MATRIX_DIMENSION_START:
+            return matDimensionStart(state,action);
+        case actionTypes.CHANGE_MATRIX_DIMENSION_SUCCESS:
+            return matDimensionSuccess(state,action);
         default: return state;
     }
 }
