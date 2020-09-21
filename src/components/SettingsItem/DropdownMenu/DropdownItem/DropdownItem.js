@@ -24,7 +24,7 @@ const StyledI = styled.i`
 
 const dropdownItem = (props) => {
     return (
-        <StyledDiv>
+        <StyledDiv onClick={() => props.click()}>
             {props.icon ? <StyledI className={props.icon} />  : null}
             {props.children}
         </StyledDiv>

@@ -22,7 +22,11 @@ class Settings extends Component{
 			open={this.state.open}
 			setOpen={this.setOpen}
 		>
-			<DropdownMenu />
+			<DropdownMenu
+				openModalForLocation={this.props.openModalForLocation}
+				openModalForSize={this.props.openModalForSize}
+				openModalForAlgorithms={this.props.openModalForAlgorithms}
+			/>
 		</SettingsItem>
 		)
 	}

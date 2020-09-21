@@ -19,9 +19,24 @@ const StyledDiv = styled.div`
 const dropdownMenu = (props) => {
     return(
         <StyledDiv>
-            <DropdownItem icon="fa fa-map-marker">Change start location</DropdownItem>
-            <DropdownItem icon="fa fa-arrows-alt">Change map size</DropdownItem>
-            <DropdownItem icon="fa fa-sitemap">Algorithms</DropdownItem>
+            <DropdownItem 
+                icon="fa fa-map-marker"
+                click={props.openModalForLocation}
+            >
+                Change positions
+            </DropdownItem>
+            <DropdownItem 
+                icon="fa fa-arrows-alt"
+                click={props.openModalForSize}
+            >
+                Change map size
+            </DropdownItem>
+            <DropdownItem 
+                icon="fa fa-sitemap"
+                click={props.openModalForAlgorithms}
+            >
+                Algorithms
+            </DropdownItem>
         </StyledDiv>
     )
 }

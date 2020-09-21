@@ -1,3 +1,3 @@
 export {
-    get_data
+    getRandomPositions
 } from "./main";
