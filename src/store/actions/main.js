@@ -48,3 +48,25 @@ export const changeMatrixDimension = (rows,columns) => {
         }, 1000);
     }
 }
+
+export const selectAlgorithms_Start = () => {
+    return{
+        type: actionTypes.SELECT_ALGORITHMS_START
+    }
+}
+
+export const selectAlgorithms_Success = (algorithms) => {
+    return{
+        type: actionTypes.SELECT_ALGORITHMS_SUCCESS,
+        algorithms: algorithms
+    }
+}
+
+export const selectAlgorithms = (algorithms) => {
+    return dispatch => {
+        dispatch(selectAlgorithms_Start());
+        setTimeout(() => {
+            dispatch(selectAlgorithms_Success(algorithms));
+        }, 1000);
+    }
+}

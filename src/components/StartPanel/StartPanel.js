@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Settings from "../../container/Settings/Settings";
 import Matrix from "../Matrix/Matrix";
+import HelpIcons from "./HelpIcons/HelpIcons";
 
 const StyledDiv = styled.div`
     width: 580px;
@@ -32,6 +33,7 @@ const startPanel = (props) => {
     return(
         <StyledDiv>
             <StyledDivContent>
+                <HelpIcons />
                 <Settings
                     openModalForLocation={props.openModalForLocation}
                     openModalForSize={props.openModalForSize}

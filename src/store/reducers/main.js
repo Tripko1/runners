@@ -11,7 +11,28 @@ const initialState = {
     matrix: [[0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,2,0,0,0,0,0]],
     loading: false,
-    barrier: []
+    barrier: [],
+    algorithms: [{
+        id: 0,
+        name: "BFS",
+        checked: true
+    },{
+        id: 1,
+        name: "DFS",
+        checked: true
+    },{
+        id: 2,
+        name: "Dijkstra",
+        checked: true
+    },{
+        id: 3,
+        name: "Floyd Warshall",
+        checked: false
+    },{
+        id: 4,
+        name: "Algoritam 5",
+        checked: false
+    }]
 }
 
 const getRandomStart = (state,action) => {
@@ -56,6 +77,17 @@ const matDimensionSuccess = (state,action) => {
     })
 }
 
+const selectAlgStart = (state,action) => {
+    return updateObject(state, { loading: true })
+}
+
+const selectAlgSuccess = (state,action) => {
+    return updateObject(state, {
+        loading: false,
+        algorithms: action.algorithms
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_RANDOM_POSITIONS_START:
@@ -66,6 +98,10 @@ const reducer = (state = initialState, action) => {
             return matDimensionStart(state,action);
         case actionTypes.CHANGE_MATRIX_DIMENSION_SUCCESS:
             return matDimensionSuccess(state,action);
+        case actionTypes.SELECT_ALGORITHMS_START:
+            return selectAlgStart(state,action);
+        case actionTypes.SELECT_ALGORITHMS_SUCCESS:
+            return selectAlgSuccess(state,action);
         default: return state;
     }
 }

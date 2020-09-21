@@ -7,6 +7,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import ChangePositions from "../../components/ChangePositions/ChangePositions";
 import ChangeMatrixSize from "../ChangeMatrixSize/ChangeMatrixSize";
+import ChangeAlgorithms from "../ChangeAlgorithms/ChangeAlgorithms";
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/index";
 
@@ -114,10 +115,13 @@ class MainContainer extends Component{
                 show={this.state.showAlgorithms}
                 modalClosed={this.closeModalForAlgorithms}
             >
-                ccc
+                <ChangeAlgorithms 
+                    modalClosed={this.closeModalForAlgorithms}
+                    onSelectAlgorithms={this.props.onSelectAlgorithms}
+                    algorithms={this.props.algorithms}
+                />
             </Modal>
         )
-
         return(
             <Fragment>
                 {spinner}
@@ -154,14 +158,16 @@ const mapStateToProps = state => {
         endX: state.endX,
         endY: state.endY,
         matrix: state.matrix,
-        loading: state.loading
+        loading: state.loading,
+        algorithms: state.algorithms
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
         onGetRandomPositions: (Xstart,Ystart,Xend,Yend,m,n) => dispatch(actions.getRandomPositions(Xstart,Ystart,Xend,Yend)),
-        onChangeMatrixDimension: (rows,columns) => dispatch(actions.changeMatrixDimension(rows,columns))
+        onChangeMatrixDimension: (rows,columns) => dispatch(actions.changeMatrixDimension(rows,columns)),
+        onSelectAlgorithms: (algorithms) => dispatch(actions.selectAlgorithms(algorithms))
     }
 }
 
