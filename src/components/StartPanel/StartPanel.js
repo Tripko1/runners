@@ -36,7 +36,11 @@ const startPanel = (props) => {
     return(
         <StyledDiv>
             <StyledDivContent>
-                <Settings />
+                <Settings
+                    openModalForLocation={props.openModalForLocation}
+                    openModalForSize={props.openModalForSize}
+                    openModalForAlgorithms={props.openModalForAlgorithms}
+                />
                 <Matrix 
                     m={props.m}
                     n={props.n}

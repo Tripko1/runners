@@ -5,7 +5,7 @@ const StyledDiv = styled.div`
     float: left;
     width: ${props => props.height - 2}px;
     height: ${props => props.height - 2}px;
-    background-color: ${props => props.value === 0 ? "#ccc" : props.value === 1 ? "#379683" : "#379683"};
+    background-color: ${props => props.value === 0 ? "#ccc" : props.value === 1 ? "#379683" : props.value === 2 ? "#379683" : "red"};
     border: 1px solid #379683;
     border-radius: 5px;
     display: flex;
