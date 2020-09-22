@@ -68,7 +68,26 @@ class MainContainer extends Component{
         while(1){
             Xend = this.getRandomInt(this.props.m);
             Yend = this.getRandomInt(this.props.n);
-            if(Xstart !== Xend || Ystart !== Yend){
+
+            if(Xstart === Xend){
+                if(Ystart > Yend+1){
+                    break;
+                }
+                else if(Yend > Ystart+1){
+                    break;
+                }
+            }
+
+            if(Ystart === Yend){
+                if(Xstart > Xend+1){
+                    break;
+                }
+                else if(Xend > Xstart+1){
+                    break;
+                }
+            }
+            
+            if(Xstart !== Xend && Ystart !== Yend){
                 break;
             }
         }
