@@ -96,7 +96,25 @@ class ChangeMatrixSize extends Component{
         while(1){
             Xend = this.props.getRandomInt(this.state.columns);
             Yend = this.props.getRandomInt(this.state.rows);
-            if(Xstart !== Xend || Ystart !== Yend){
+            if(Xstart === Xend){
+                if(Ystart > Yend+1){
+                    break;
+                }
+                else if(Yend > Ystart+1){
+                    break;
+                }
+            }
+
+            if(Ystart === Yend){
+                if(Xstart > Xend+1){
+                    break;
+                }
+                else if(Xend > Xstart+1){
+                    break;
+                }
+            }
+            
+            if(Xstart !== Xend && Ystart !== Yend){
                 break;
             }
         }

@@ -11,10 +11,11 @@ const StyledDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: ${props => props.height > 25 ? "30px" : "15px"};
 `;
 
 const StyledI = styled.i`
-    color: ${props => props.color}
+    color: ${props => props.color};
 `;
 
 const matrixField = (props) => {
