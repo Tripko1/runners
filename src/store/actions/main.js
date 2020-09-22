@@ -70,3 +70,46 @@ export const selectAlgorithms = (algorithms) => {
         }, 1000);
     }
 }
+
+export const createConnectivityMatrix_Start = () => {
+    return{
+        type: actionTypes.CREATE_CONNECTIVITY_MATRIX_START
+    }
+}
+
+export const createConnectivityMatrix_Success = () => {
+    return{
+        type: actionTypes.CREATE_CONNECTIVITY_MATRIX_SUCCESS
+    }
+}
+
+export const createConnectivityMatrix = () => {
+    return dispatch => {
+        dispatch(createConnectivityMatrix_Start());
+        setTimeout(() => {
+            dispatch(createConnectivityMatrix_Success());
+        }, 1000);
+    }
+}
+
+export const bfs_start = () => {
+    return{
+        type: actionTypes.BFS_START
+    }
+}
+
+export const bfs_success = (obj) => {
+    return{
+        type: actionTypes.BFS_SUCCESS,
+        obj: obj
+    }
+}
+
+export const bfs = (obj) => {
+    return dispatch => {
+        dispatch(bfs_start());
+        setTimeout(() => {
+            dispatch(bfs_success(obj));
+        }, 1000);
+    }
+}

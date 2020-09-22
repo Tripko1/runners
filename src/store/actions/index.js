@@ -1,5 +1,7 @@
 export {
     getRandomPositions,
     changeMatrixDimension,
-    selectAlgorithms
+    selectAlgorithms,
+    createConnectivityMatrix,
+    bfs
 } from "./main";

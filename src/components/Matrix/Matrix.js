@@ -8,6 +8,7 @@ const StyledDiv = styled.div`
 
     @media(max-width: 1001px){
         min-width: 400px;
+        min-height: 400px;
     }
 `;
 

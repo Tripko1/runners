@@ -10,6 +10,7 @@ import ChangeMatrixSize from "../ChangeMatrixSize/ChangeMatrixSize";
 import ChangeAlgorithms from "../ChangeAlgorithms/ChangeAlgorithms";
 import {connect} from "react-redux";
 import * as actions from "../../store/actions/index";
+import { bfs } from "../../algorithms/bfs";
 
 const StyledMain = styled.main`
     height: calc(100% - 40px);
@@ -97,6 +98,17 @@ class MainContainer extends Component{
         }, 1100);
     }
 
+    runAlgorithms = () => {
+        if(this.props.algorithms[0].checked){
+            let obj=bfs(this.props);
+            this.props.onBfs(obj);
+        }
+    }
+
+    componentDidMount(){
+        this.props.onCreateConnectivityMatrix();
+    }
+
     render(){
         let spinner = null;
         if(this.props.loading){
@@ -125,6 +137,7 @@ class MainContainer extends Component{
                     onChangeMatrixDimension={this.props.onChangeMatrixDimension}
                     onGetRandomPositions={this.props.onGetRandomPositions}
                     getRandomInt={this.getRandomInt}
+                    onCreateConnectivityMatrix={this.props.onCreateConnectivityMatrix}
                 />
             </Modal>
         )
@@ -156,6 +169,7 @@ class MainContainer extends Component{
                         openModalForLocation={this.openModalForLocation}
                         openModalForSize={this.openModalForSize}
                         openModalForAlgorithms={this.openModalForAlgorithms}
+                        runAlgorithms={this.runAlgorithms}
                     />
                     <LevelPanel />
                     <RunnersPanel />
@@ -178,7 +192,9 @@ const mapStateToProps = state => {
         endY: state.endY,
         matrix: state.matrix,
         loading: state.loading,
-        algorithms: state.algorithms
+        algorithms: state.algorithms,
+        graph: state.graph,
+        level: state.level
     }
 }
 
@@ -186,7 +202,9 @@ const mapDispatchToProps = dispatch => {
     return{
         onGetRandomPositions: (Xstart,Ystart,Xend,Yend,m,n) => dispatch(actions.getRandomPositions(Xstart,Ystart,Xend,Yend)),
         onChangeMatrixDimension: (rows,columns) => dispatch(actions.changeMatrixDimension(rows,columns)),
-        onSelectAlgorithms: (algorithms) => dispatch(actions.selectAlgorithms(algorithms))
+        onSelectAlgorithms: (algorithms) => dispatch(actions.selectAlgorithms(algorithms)),
+        onCreateConnectivityMatrix: () => dispatch(actions.createConnectivityMatrix()),
+        onBfs: (obj) => dispatch(actions.bfs(obj))
     }
 }
 
