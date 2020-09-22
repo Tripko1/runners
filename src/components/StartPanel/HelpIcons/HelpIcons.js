@@ -5,6 +5,8 @@ import MatrixField from "../../Matrix/MatrixRow/MatrixField/MatrixField";
 const StyledDiv = styled.div`
     width: 100%;
     padding: 10px;
+    height: 90px;
+    min-height: 90px;
 `;
 
 const First = styled.div`

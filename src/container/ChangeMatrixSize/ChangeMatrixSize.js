@@ -119,6 +119,7 @@ class ChangeMatrixSize extends Component{
             }
         }
         this.props.onGetRandomPositions(Xstart,Ystart,Xend,Yend);
+        this.props.onCreateConnectivityMatrix();
         setTimeout(() => {
             this.setState({
                 rows: "",
