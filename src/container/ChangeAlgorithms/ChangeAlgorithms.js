@@ -1,21 +1,6 @@
 import React,{Component, Fragment} from "react";
 import styled from "styled-components";
-
-const StyledDiv = styled.div`
-    width: 80%;
-    margin: 0 auto;
-`;
-
-const StyledH1 = styled.h1`
-    text-align: center;
-    color: #05386b;
-`;
-
-const StyledDivCenter = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
+import * as style from "./style";
 
 const StyledButton = styled.button`
     background-color: ${props => props.btnType === "Success" ? "#5cdb95" : "tomato"};
@@ -35,18 +20,6 @@ const StyledButton = styled.button`
     &:disabled {
         background-color: #484a4d;
         cursor: not-allowed;
-    }
-`;
-
-const StyledI = styled.i`
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #944317;
-    cursor: pointer;
-
-    &:hover{
-        color: tomato;
     }
 `;
 
@@ -123,10 +96,6 @@ const Field = styled.div`
     }
 `;
 
-const Top = styled.div`
-    margin-top: 85px;
-`;
-
 class ChangeAlgorithms extends Component{
     state={
         algorithms: this.props.algorithms   
@@ -178,20 +147,20 @@ class ChangeAlgorithms extends Component{
         })
         return(
             <Fragment>
-                <StyledI className="fa fa-window-close" onClick={() => this.props.modalClosed()}/>
-                <StyledDiv>
-                    <StyledH1>Select minimum 3 algorithms</StyledH1>
+                <style.StyledI className="fa fa-window-close" onClick={() => this.props.modalClosed()}/>
+                <style.StyledDiv>
+                    <style.StyledH1>Select minimum 3 algorithms</style.StyledH1>
                     <form onSubmit={this.submitHandler}>
-                        <StyledDivCenter>
+                        <style.StyledDivCenter>
                             {content}
-                        </StyledDivCenter>
-                        <StyledDivCenter>
-                            <Top>
+                        </style.StyledDivCenter>
+                        <style.StyledDivCenter>
+                            <style.Top>
                                 <StyledButton btnType="Success" disabled={!disabled}>Submit</StyledButton>
-                            </Top>
-                        </StyledDivCenter>
+                            </style.Top>
+                        </style.StyledDivCenter>
                     </form>
-                </StyledDiv>
+                </style.StyledDiv>
             </Fragment>
         )
     }

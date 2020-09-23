@@ -108,8 +108,67 @@ export const bfs_success = (obj) => {
 export const bfs = (obj) => {
     return dispatch => {
         dispatch(bfs_start());
-        setTimeout(() => {
-            dispatch(bfs_success(obj));
-        }, 1000);
+        dispatch(bfs_success(obj));
+    }
+}
+
+export const setMatrixBFS_start = () => {
+    return{
+        type: actionTypes.SET_MATRIX_BFS_START
+    }
+}
+
+export const setMatrixBFS_success = (mat) => {
+    return{
+        type: actionTypes.SET_MATRIX_BFS_SUCCESS,
+        mat: mat
+    }
+}
+
+export const setMatrixBFS = (mat) => {
+    return dispatch => {
+        dispatch(setMatrixBFS_start());
+        dispatch(setMatrixBFS_success(mat));
+    }
+}
+
+export const levelFinish_start = () => {
+    return{
+        type: actionTypes.LEVEL_FINISH_START
+    }
+}
+
+export const levelFinish_success = (mat) => {
+    return{
+        type: actionTypes.LEVEL_FINISH_SUCCESS,
+        mat: mat,
+    }
+}
+
+export const levelFinish = (mat) => {
+    return dispatch => {
+        dispatch(levelFinish_start());
+        dispatch(levelFinish_success(mat));
+    }
+}
+
+export const finishGame_Start = () => {
+    return {
+        type: actionTypes.FINISH_GAME_START
+    }
+}
+
+export const finishGame_Success = () => {
+    return {
+        type: actionTypes.FINISH_GAME_SUCCESS
+    }
+}
+
+
+
+export const finishGame = () => {
+    return dispatch => {
+        dispatch(finishGame_Start());
+        dispatch(finishGame_Success());
     }
 }

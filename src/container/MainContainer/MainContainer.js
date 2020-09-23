@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from "react";
-import styled from "styled-components";
 import StartPanel from "../../components/StartPanel/StartPanel";
 import LevelPanel from "../../components/LevelPanel/LevelPanel";
 import RunnersPanel from "../../components/RunnersPanel/RunnersPanel";
@@ -9,23 +8,9 @@ import ChangePositions from "../../components/ChangePositions/ChangePositions";
 import ChangeMatrixSize from "../ChangeMatrixSize/ChangeMatrixSize";
 import ChangeAlgorithms from "../ChangeAlgorithms/ChangeAlgorithms";
 import {connect} from "react-redux";
-import * as actions from "../../store/actions/index";
 import { bfs } from "../../algorithms/bfs";
-
-const StyledMain = styled.main`
-    height: calc(100% - 40px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    @media(max-width: 1001px){
-        justify-content: flex-start;
-    }
-`;
+import * as style from "./style";
+import * as actions from "../../store/actions/index";
 
 class MainContainer extends Component{
     state={
@@ -98,11 +83,56 @@ class MainContainer extends Component{
         }, 1100);
     }
 
+    newRandomBlock = () => {
+        let Xblock = this.getRandomInt(this.props.m);
+        let Yblock = this.getRandomInt(this.props.n);
+        let pomMatrix = [...this.props.matrix];
+        for(let i=0; i<pomMatrix.length; i++){
+            pomMatrix[i] = [...this.props.matrix[i]];
+        }
+        
+        while(1){
+            if(pomMatrix[Yblock][Xblock] === 0){
+                pomMatrix[Yblock][Xblock] = 3;
+                let obj = bfs(this.props,pomMatrix);
+                if(obj.path){
+                    break;
+                }
+                else{
+                    this.props.onFinishGAME();
+                    break;
+                }
+            }
+            else{
+                Xblock = this.getRandomInt(this.props.m);
+                Yblock = this.getRandomInt(this.props.n);
+            }
+        }
+        return pomMatrix;
+    }
+
+    startRunningBFS = (obj) => {
+        const rec = obj.reconstruction;
+        let mat = [...this.props.matrixBFS];
+        for(let i=0; i<mat.length; i++){
+            mat[i] = [...this.props.matrixBFS[i]];
+        }
+        for(let i=1; i<rec.length-1; i++){
+            mat[rec[i].i][rec[i].j] = 4;
+        }
+        this.props.onSetMatrixBFS(mat);
+    }
+
     runAlgorithms = () => {
         if(this.props.algorithms[0].checked){
-            let obj=bfs(this.props);
+            let obj=bfs(this.props,null);
             this.props.onBfs(obj);
+            this.startRunningBFS(obj);
         }
+
+        setTimeout(() => {
+            this.props.onLevelFinish(this.newRandomBlock());
+        }, 1500);
     }
 
     componentDidMount(){
@@ -157,7 +187,7 @@ class MainContainer extends Component{
         return(
             <Fragment>
                 {spinner}
-                <StyledMain>
+                <style.StyledMain>
                     <StartPanel 
                         m={this.props.m}
                         n={this.props.n}
@@ -170,13 +200,25 @@ class MainContainer extends Component{
                         openModalForSize={this.openModalForSize}
                         openModalForAlgorithms={this.openModalForAlgorithms}
                         runAlgorithms={this.runAlgorithms}
+                        clickedRun={this.props.clickedRun}
+                        finish={this.props.finish}
                     />
                     <LevelPanel />
-                    <RunnersPanel />
+                    <RunnersPanel 
+                        m={this.props.m}
+                        n={this.props.n}
+                        startX={this.props.startX}
+                        startY={this.props.startY}
+                        endX={this.props.endX}
+                        endY={this.props.endY}
+                        matrixBFS={this.props.matrixBFS}
+                        clickedRun={this.props.clickedRun}
+                        bfsArray={this.props.bfsArray}
+                    />
                     {modalChangeLoaction}
                     {modalChangeSize}
                     {modalChangeAlgorithms}
-                </StyledMain>
+                </style.StyledMain>
             </Fragment>
         )
     }
@@ -194,7 +236,11 @@ const mapStateToProps = state => {
         loading: state.loading,
         algorithms: state.algorithms,
         graph: state.graph,
-        level: state.level
+        level: state.level,
+        bfsArray: state.bfsArray,
+        clickedRun: state.clickedRun,
+        matrixBFS: state.matrixBFS,
+        finish: state.finish
     }
 }
 
@@ -204,7 +250,10 @@ const mapDispatchToProps = dispatch => {
         onChangeMatrixDimension: (rows,columns) => dispatch(actions.changeMatrixDimension(rows,columns)),
         onSelectAlgorithms: (algorithms) => dispatch(actions.selectAlgorithms(algorithms)),
         onCreateConnectivityMatrix: () => dispatch(actions.createConnectivityMatrix()),
-        onBfs: (obj) => dispatch(actions.bfs(obj))
+        onBfs: (obj) => dispatch(actions.bfs(obj)),
+        onSetMatrixBFS: (mat) => dispatch(actions.setMatrixBFS(mat)),
+        onLevelFinish: (mat) => dispatch(actions.levelFinish(mat)),
+        onFinishGAME: () => dispatch(actions.finishGame())
     }
 }
 

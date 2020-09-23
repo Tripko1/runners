@@ -1,21 +1,11 @@
 import React, {Fragment} from "react";
-import styled from "styled-components";
 import MatrixRow from "./MatrixRow/MatrixRow";
-
-const StyledDiv = styled.div`
-    margin: auto;
-    width: 400px;
-
-    @media(max-width: 1001px){
-        min-width: 400px;
-        min-height: 400px;
-    }
-`;
+import * as style from "./style";
 
 const matrix = (props) => {
     let i=0;
     const displayMatrix = (
-        <StyledDiv>
+        <style.StyledDiv>
             {
              props.matrix.map(row => <MatrixRow 
                 key={i++} 
@@ -23,7 +13,7 @@ const matrix = (props) => {
                 n={props.n}
                 m={props.m}
              />) }
-        </StyledDiv>
+        </style.StyledDiv>
     );
     return(
         <Fragment>

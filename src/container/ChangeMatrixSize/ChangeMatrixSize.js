@@ -1,21 +1,6 @@
 import React,{Component, Fragment} from "react";
 import styled from "styled-components";
-
-const StyledDiv = styled.div`
-    width: 80%;
-    margin: 0 auto;
-`;
-
-const StyledH1 = styled.h1`
-    text-align: center;
-    color: #05386b;
-`;
-
-const StyledDivCenter = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
+import * as style from "./style";
 
 const StyledButton = styled.button`
     background-color: ${props => props.btnType === "Success" ? "#5cdb95" : "tomato"};
@@ -35,18 +20,6 @@ const StyledButton = styled.button`
     &:disabled {
         background-color: #484a4d;
         cursor: not-allowed;
-    }
-`;
-
-const StyledI = styled.i`
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #944317;
-    cursor: pointer;
-
-    &:hover{
-        color: tomato;
     }
 `;
 
@@ -143,11 +116,11 @@ class ChangeMatrixSize extends Component{
         }
         return(
             <Fragment>
-                <StyledI className="fa fa-window-close" onClick={() => this.props.modalClosed()}/>
-                <StyledDiv>
-                    <StyledH1>Change Matrix size</StyledH1>
+                <style.StyledI className="fa fa-window-close" onClick={() => this.props.modalClosed()}/>
+                <style.StyledDiv>
+                    <style.StyledH1>Change Matrix size</style.StyledH1>
                     <form onSubmit={this.submitHandler}>
-                        <StyledDivCenter>
+                        <style.StyledDivCenter>
                             <div>
                                 <label htmlFor="x">Number of rows (between 3 and 20):</label>
                                 <input 
@@ -159,8 +132,8 @@ class ChangeMatrixSize extends Component{
                                     onChange={this.handleRowsChange}
                                 />
                             </div><br /><br />
-                        </StyledDivCenter>
-                        <StyledDivCenter>
+                        </style.StyledDivCenter>
+                        <style.StyledDivCenter>
                             <div>
                                 <label htmlFor="y">Number of columns (between 3 and 20):</label>
                                 <input 
@@ -172,12 +145,12 @@ class ChangeMatrixSize extends Component{
                                     onChange={this.handleColumnsChange}
                                 />
                             </div><br /><br />
-                        </StyledDivCenter>
-                        <StyledDivCenter>
+                        </style.StyledDivCenter>
+                        <style.StyledDivCenter>
                             <StyledButton btnType="Success" disabled={!disabled}>Submit</StyledButton>
-                        </StyledDivCenter>
+                        </style.StyledDivCenter>
                     </form>
-                </StyledDiv>
+                </style.StyledDiv>
             </Fragment>
         )
     }
