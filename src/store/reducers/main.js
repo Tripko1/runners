@@ -1,4 +1,6 @@
+import { finishGame } from "../actions";
 import * as actionTypes from "../actions/actionTypes";
+import { finishGame_Start } from "../actions/main";
 import { updateObject } from "../utility";
 
 const initialState = {
@@ -12,6 +14,9 @@ const initialState = {
     matrix: [[0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,2,0,0,0,0,0]],
     graph:[],
+    matrixBFS: [[0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,2,0,0,0,0,0]],
+    allMatrixBFS: [],
     loading: false,
     barrier: [],
     algorithms: [{
@@ -35,7 +40,9 @@ const initialState = {
         name: "Algoritam 5",
         checked: false
     }],
-    bfsArray: []
+    bfsArray: [],
+    clickedRun: false,
+    finish: false
 }
 
 const getRandomStart = (state,action) => {
@@ -64,7 +71,11 @@ const getRandomSuccess = (state,action) => {
         endX: action.Xend,
         endY: action.Yend,
         matrix: setMatrix(state,action),
-        barrier: []
+        barrier: [],
+        bfsArray: [],
+        clickedRun: false,
+        matrixBFS: setMatrix(state,action),
+        finish: false
     })
 }
 
@@ -77,7 +88,11 @@ const matDimensionSuccess = (state,action) => {
         loading: false,
         n: action.rows,
         m: action.columns,
-        bfsArray: []
+        barrier: [],
+        bfsArray: [],
+        clickedRun: false,
+        matrixBFS: state.matrix,
+        finish: false
     })
 }
 
@@ -144,10 +159,57 @@ const bfsSuccess = (state,action) => {
         level: action.obj.level
     });
     return updateObject(state, { 
+        ...state,
         loading: false,
-        bfsArray: state.bfsArray.concat(newArray)
+        bfsArray: state.bfsArray.concat(newArray),
+        clickedRun: true
     })
 }
+
+const setMatrixBFSStart = (state, action) => {
+    return updateObject(state, { loading: true })
+}
+
+const setMatrixBFSSuccess = (state, action) => {
+    let newArr = [...action.mat];
+    for(let i=0; i<newArr.length; i++){
+        newArr[i] = [...action.mat[i]];
+    }
+    return updateObject(state, {
+        loading: false,
+        matrixBFS: newArr,
+        allMatrixBFS: state.allMatrixBFS.concat([newArr])
+     });
+}
+
+const lvlFinishStart = (state, action) => {
+    return updateObject(state, { loading: true })
+}
+
+const lvlFinishSuccess = (state, action) => {
+    let newMatrix = [...action.mat];
+    for(let i=0; i<action.mat.length; i++){
+        newMatrix[i] = [...action.mat[i]];
+    }
+    return updateObject(state, {
+        loading: false,
+        matrix: newMatrix,
+        matrixBFS: newMatrix,
+        clickedRun: false
+     });
+}
+
+const finishStart = (state, action) => {
+    return updateObject(state, { loading: true })
+}
+
+const finishSuccess = (state, action) => {
+    return updateObject(state, { 
+        loading: false,
+        finish: true
+     })
+}
+
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -171,7 +233,19 @@ const reducer = (state = initialState, action) => {
             return bfsStart(state,action);
         case actionTypes.BFS_SUCCESS:
             return bfsSuccess(state,action);
-            
+        case actionTypes.SET_MATRIX_BFS_START:
+            return setMatrixBFSStart(state,action);
+        case actionTypes.SET_MATRIX_BFS_SUCCESS:
+            return setMatrixBFSSuccess(state,action); 
+        case actionTypes.LEVEL_FINISH_START:
+            return lvlFinishStart(state, action);
+        case actionTypes.LEVEL_FINISH_SUCCESS:
+            return lvlFinishSuccess(state, action);
+        case actionTypes.FINISH_GAME_START:
+            return finishStart(state,action);
+        case actionTypes.FINISH_GAME_SUCCESS:
+            return finishSuccess(state,action);
+                    
         default: return state;
     }
 }

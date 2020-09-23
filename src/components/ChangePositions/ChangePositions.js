@@ -1,21 +1,6 @@
 import React,{Fragment} from "react";
 import styled from "styled-components";
-
-const StyledDiv = styled.div`
-    width: 80%;
-    margin: 0 auto;
-`;
-
-const StyledH1 = styled.h1`
-    text-align: center;
-    color: #05386b;
-`;
-
-const StyledDivForButton = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
+import * as style from "./style";
 
 const StyledButton = styled.button`
     background-color: ${props => props.btnType === "Success" ? "#5cdb95" : "tomato"};
@@ -34,28 +19,16 @@ const StyledButton = styled.button`
     }
 `;
 
-const StyledI = styled.i`
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #944317;
-    cursor: pointer;
-
-    &:hover{
-        color: tomato;
-    }
-`;
-
 const changePositions = (props) => {
     return (
         <Fragment>
-            <StyledI className="fa fa-window-close" onClick={() => props.modalClosed()}/>
-            <StyledDiv>
-                <StyledH1>Get random Start and End position</StyledH1>
-                <StyledDivForButton>
+            <style.StyledI className="fa fa-window-close" onClick={() => props.modalClosed()}/>
+            <style.StyledDiv>
+                <style.StyledH1>Get random Start and End position</style.StyledH1>
+                <style.StyledDivForButton>
                     <StyledButton btnType="Success" onClick={() => props.generateRandomPosition()}>Random Generator</StyledButton>
-                </StyledDivForButton>
-            </StyledDiv>
+                </style.StyledDivForButton>
+            </style.StyledDiv>
         </Fragment>
     )
 }

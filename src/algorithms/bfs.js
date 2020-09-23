@@ -30,15 +30,28 @@ const START_END_RECONSTRUCTION = () => {
     }
 }
 
-export const bfs = (state) => {
+export const bfs = (state,mat) => {
     let color = [], Q = [], d = [], pi = [];
     let path = true;
+    let matrix;
+    if(mat !== null){
+        matrix = [...mat];
+        for(let i=0; i.length; i++){
+            matrix[i] = [...mat[i]];
+        }
+    }
+    else{
+        matrix = [...state.matrix];
+        for(let i=0; i.length; i++){
+            matrix[i] = [...state.matrix[i]];
+        }
+    }
     for(let i=0; i<state.n; i++){
         color.push([]);
         d.push([]);
         pi.push([]);
         for(let j=0; j<state.m; j++){
-            if(state.matrix[i][j]===3){
+            if(matrix[i][j]===3){
                 color[i].push("RED");
             }
             else{
@@ -71,6 +84,7 @@ export const bfs = (state) => {
         }
         DEQUEUE(Q);
         if(Q.length === 0){
+            console.log("FINISH");
             path=false;
             break;
         }
@@ -81,14 +95,16 @@ export const bfs = (state) => {
         const end = {i: state.endY, j: state.endX};
         END_START_RECONSTRUCTION(pi,start,end, []);
         START_END_RECONSTRUCTION();
+        return{
+            pi: pi,
+            d: d,
+            color: color,
+            reconstruction: reconstruction,
+            path: path,
+            level: state.level
+        }
     }
-
     return{
-        pi: pi,
-        d: d,
-        color: color,
-        reconstruction: reconstruction,
-        path: path,
-        level: state.level
+        path: path
     }
 }

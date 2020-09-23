@@ -1,24 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import DropdownItem from "./DropdownItem/DropdownItem";
-
-const StyledDiv = styled.div`
-    position: absolute;
-    right: 5px;
-    top: 43px;
-    width: 200px;
-    background-color: #EDF5E1;
-    border: 1px sold #379683;
-    box-shadow: 0 0 5px #379683;
-    border-radius: 8px;
-    padding: 2px;
-    overflow: hidden;
-    z-index: 1;
-`;
+import * as style from "./style";
 
 const dropdownMenu = (props) => {
     return(
-        <StyledDiv>
+        <style.StyledDiv>
             <DropdownItem 
                 icon="fa fa-map-marker"
                 click={props.openModalForLocation}
@@ -37,7 +23,7 @@ const dropdownMenu = (props) => {
             >
                 Algorithms
             </DropdownItem>
-        </StyledDiv>
+        </style.StyledDiv>
     )
 }
 

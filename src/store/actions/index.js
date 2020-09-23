@@ -3,5 +3,8 @@ export {
     changeMatrixDimension,
     selectAlgorithms,
     createConnectivityMatrix,
-    bfs
+    bfs,
+    setMatrixBFS,
+    levelFinish,
+    finishGame
 } from "./main";
