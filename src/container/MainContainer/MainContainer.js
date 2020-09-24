@@ -84,28 +84,40 @@ class MainContainer extends Component{
     }
 
     newRandomBlock = () => {
-        let Xblock = this.getRandomInt(this.props.m);
-        let Yblock = this.getRandomInt(this.props.n);
+        let Xblock,Yblock;
         let pomMatrix = [...this.props.matrix];
         for(let i=0; i<pomMatrix.length; i++){
             pomMatrix[i] = [...this.props.matrix[i]];
         }
-        
+
         while(1){
+            Xblock = this.getRandomInt(this.props.m);
+            Yblock = this.getRandomInt(this.props.n);
+            let pomMatrixBFS = [...this.props.matrixBFS];
+            for(let i=0; i<pomMatrixBFS.length; i++){
+                pomMatrixBFS[i] = [...this.props.matrixBFS[i]];
+            }
             if(pomMatrix[Yblock][Xblock] === 0){
                 pomMatrix[Yblock][Xblock] = 3;
+                pomMatrixBFS[Yblock][Xblock] = 3;
                 let obj = bfs(this.props,pomMatrix);
                 if(obj.path){
                     break;
                 }
-                else{
+                let ind=0;
+                for(let i=0; i<this.props.n; i++){
+                    for(let j=0; j<this.props.m; j++){
+                        if(pomMatrixBFS[i][j] === 0){
+                            ind++;
+                        }
+                    }
+                }
+                if(ind === 0){
                     this.props.onFinishGAME();
                     break;
                 }
-            }
-            else{
-                Xblock = this.getRandomInt(this.props.m);
-                Yblock = this.getRandomInt(this.props.n);
+                pomMatrix[Yblock][Xblock] = 0;
+                pomMatrixBFS[Yblock][Xblock] = 0;
             }
         }
         return pomMatrix;

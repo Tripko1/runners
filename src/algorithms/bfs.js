@@ -82,7 +82,7 @@ export const bfs = (state,mat) => {
         if(Q[0].i === state.endY && Q[0].j === state.endX){
             break;
         }
-        DEQUEUE(Q);
+        Q = DEQUEUE(Q);
         if(Q.length === 0){
             console.log("FINISH");
             path=false;
