@@ -25,6 +25,7 @@ const matrixRow = (props) => {
                         value={item}
                         height={height}
                         color={item === 1 ? "#edf5e1" : item === 2 ? "black" : "#379683"}
+                        pathMATRIX={props.pathMATRIX !== undefined ? props.pathMATRIX[i-1] : undefined}
                     />)
             }
         </div>

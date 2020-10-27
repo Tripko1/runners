@@ -118,17 +118,19 @@ export const setMatrixBFS_start = () => {
     }
 }
 
-export const setMatrixBFS_success = (mat) => {
+export const setMatrixBFS_success = (mat,alg,matPath) => {
     return{
         type: actionTypes.SET_MATRIX_BFS_SUCCESS,
-        mat: mat
+        mat: mat,
+        alg: alg,
+        matPath: matPath
     }
 }
 
-export const setMatrixBFS = (mat) => {
+export const setMatrixBFS = (mat,alg,matPath) => {
     return dispatch => {
         dispatch(setMatrixBFS_start());
-        dispatch(setMatrixBFS_success(mat));
+        dispatch(setMatrixBFS_success(mat,alg,matPath));
     }
 }
 
@@ -164,11 +166,61 @@ export const finishGame_Success = () => {
     }
 }
 
-
-
 export const finishGame = () => {
     return dispatch => {
         dispatch(finishGame_Start());
         dispatch(finishGame_Success());
+    }
+}
+
+export const dijkstra_start = () => {
+    return{
+        type: actionTypes.DIJKSTRA_START
+    }
+}
+
+export const dijkstra_success = (obj) => {
+    return{
+        type: actionTypes.DIJKSTRA_SUCCESS,
+        obj: obj
+    }
+}
+
+export const dijkstra = (obj) => {
+    return dispatch => {
+        dispatch(dijkstra_start());
+        dispatch(dijkstra_success(obj));
+    }
+}
+
+export const dfs_start = () => {
+    return{
+        type: actionTypes.DFS_START
+    }
+}
+
+export const dfs_success = (obj) => {
+    return{
+        type: actionTypes.DFS_SUCCESS,
+        obj: obj
+    }
+}
+
+export const dfs = (obj) => {
+    return dispatch => {
+        dispatch(dfs_start());
+        dispatch(dfs_success(obj));
+    }
+}
+
+export const resetMatrixPath_success = () => {
+    return{
+        type: actionTypes.RESET_MATRIX_PATH_SUCCESS
+    }
+}
+
+export const resetMatrixPATH = () => {
+    return dispatch => {
+        dispatch(resetMatrixPath_success());
     }
 }

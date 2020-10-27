@@ -1,12 +1,11 @@
-import { finishGame } from "../actions";
 import * as actionTypes from "../actions/actionTypes";
-import { finishGame_Start } from "../actions/main";
 import { updateObject } from "../utility";
 
 const initialState = {
     m: 10,
     n: 10,
     level: 1,
+    levelsArray: [],
     startX: 4,
     startY: 0,
     endX: 4,
@@ -14,9 +13,8 @@ const initialState = {
     matrix: [[0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,2,0,0,0,0,0]],
     graph:[],
-    matrixBFS: [[0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],
+    matrixPATH: [[0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,2,0,0,0,0,0]],
-    allMatrixBFS: [],
     loading: false,
     barrier: [],
     algorithms: [{
@@ -41,8 +39,12 @@ const initialState = {
         checked: false
     }],
     bfsArray: [],
+    dfsArray: [],
+    dijkstraArray: [],
     clickedRun: false,
-    finish: false
+    finish: false,
+    algorithmName: "",
+    pathMATRIX: [],
 }
 
 const getRandomStart = (state,action) => {
@@ -73,9 +75,14 @@ const getRandomSuccess = (state,action) => {
         matrix: setMatrix(state,action),
         barrier: [],
         bfsArray: [],
+        dfsArray: [],
         clickedRun: false,
-        matrixBFS: setMatrix(state,action),
-        finish: false
+        matrixPATH: setMatrix(state,action),
+        algorithmName: "",
+        finish: false,
+        level: 1,
+        levelsArray: [],
+        pathMATRIX: []
     })
 }
 
@@ -90,9 +97,15 @@ const matDimensionSuccess = (state,action) => {
         m: action.columns,
         barrier: [],
         bfsArray: [],
+        dfsArray: [],
+        dijkstraArray: [],
         clickedRun: false,
-        matrixBFS: state.matrix,
-        finish: false
+        matrixPATH: state.matrix,
+        algorithmName: "",
+        finish: false,
+        level: 1,
+        levelsArray: [],
+        pathMATRIX: []
     })
 }
 
@@ -156,7 +169,8 @@ const bfsSuccess = (state,action) => {
         color: action.obj.color,
         reconstruction: action.obj.reconstruction,
         path: action.obj.path,
-        level: action.obj.level
+        level: action.obj.level,
+        matrix: action.obj.matrix
     });
     return updateObject(state, { 
         ...state,
@@ -175,10 +189,16 @@ const setMatrixBFSSuccess = (state, action) => {
     for(let i=0; i<newArr.length; i++){
         newArr[i] = [...action.mat[i]];
     }
+    let pathMATRIX = [...action.matPath];
+    for(let i=0; i<state.n; i++){
+        pathMATRIX[i] = [...action.matPath[i]];
+    }
     return updateObject(state, {
         loading: false,
-        matrixBFS: newArr,
-        allMatrixBFS: state.allMatrixBFS.concat([newArr])
+        matrixPATH: newArr,
+        algorithmName: action.alg,
+        pathMATRIX: pathMATRIX,
+        clickedRun: true
      });
 }
 
@@ -194,8 +214,12 @@ const lvlFinishSuccess = (state, action) => {
     return updateObject(state, {
         loading: false,
         matrix: newMatrix,
-        matrixBFS: newMatrix,
-        clickedRun: false
+        matrixPATH: newMatrix,
+        algorithmName: "",
+        clickedRun: false,
+        level: state.level + 1,
+        levelsArray: state.levelsArray.concat(state.level),
+        pathMATRIX: []
      });
 }
 
@@ -206,10 +230,58 @@ const finishStart = (state, action) => {
 const finishSuccess = (state, action) => {
     return updateObject(state, { 
         loading: false,
-        finish: true
+        finish: true,
      })
 }
 
+const dijkstraStart = (state,action) => {
+    return updateObject(state,{ loading: true })
+}
+
+const dijkstraSuccess = (state,action) => {
+    const newArray = updateObject(action.obj,{
+        pi: action.obj.pi,
+        d: action.obj.d,
+        color: action.obj.color,
+        reconstruction: action.obj.reconstruction,
+        level: action.obj.level
+    });
+    return updateObject(state,{ 
+        loading: false,
+        dijkstraArray: state.dijkstraArray.concat(newArray),
+        clickedRun: true
+    })
+}
+
+const dfsStart = (state,action) => {
+    return updateObject(state,{ loading: true })
+}
+
+const dfsSuccess = (state,action) => {
+    const newArray = updateObject(action.obj,{
+        pi: action.obj.pi,
+        d: action.obj.d,
+        color: action.obj.color,
+        reconstruction: action.obj.reconstruction,
+        level: action.obj.level
+    });
+    return updateObject(state,{ 
+        loading: false,
+        dfsArray: state.dfsArray.concat(newArray),
+        clickedRun: true
+    })
+}
+
+const resetMatrixPath = (state, action) => {
+    let matrix = [...state.matrix];
+    const n = matrix.length;
+    for(let i=0; i<n; i++){
+        matrix[i] = [...state.matrix[i]];
+    }
+    return updateObject(state,{
+        matrixPATH: matrix
+    })
+}
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -245,7 +317,16 @@ const reducer = (state = initialState, action) => {
             return finishStart(state,action);
         case actionTypes.FINISH_GAME_SUCCESS:
             return finishSuccess(state,action);
-                    
+        case actionTypes.DIJKSTRA_START:
+            return dijkstraStart(state,action);
+        case actionTypes.DIJKSTRA_SUCCESS:
+            return dijkstraSuccess(state,action);
+        case actionTypes.DFS_START:
+            return dfsStart(state,action);
+        case actionTypes.DFS_SUCCESS:
+            return dfsSuccess(state,action);
+        case actionTypes.RESET_MATRIX_PATH_SUCCESS:
+            return resetMatrixPath(state,action);    
         default: return state;
     }
 }
