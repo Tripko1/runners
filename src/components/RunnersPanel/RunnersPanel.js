@@ -8,7 +8,7 @@ class RunnersPanel extends Component{
             <style.StyledDiv>
                 <style.StyledDivContent>
                     <style.StyledTextDiv>
-                        BFS
+                        {this.props.algorithmName}
                     </style.StyledTextDiv>
                     {this.props.clickedRun ? 
                     <Matrix 
@@ -19,6 +19,7 @@ class RunnersPanel extends Component{
                         endX={this.props.endX}
                         endY={this.props.endY}
                         matrix={this.props.matrixBFS}
+                        pathMATRIX={this.props.pathMATRIX}
                 /> : null}
                 </style.StyledDivContent>
             </style.StyledDiv>

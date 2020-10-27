@@ -6,5 +6,8 @@ export {
     bfs,
     setMatrixBFS,
     levelFinish,
-    finishGame
+    finishGame,
+    dijkstra,
+    dfs,
+    resetMatrixPATH
 } from "./main";

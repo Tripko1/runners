@@ -24,18 +24,70 @@ const StyledDivContent = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    max-height: 100%;
+    height: 100%;
     position: relative;
     white-space: normal;
     border-radius: 10px;
-    border: 3px solid teal;
+`;
+
+const StyledH1 = styled.h1`
+    text-align: center;
+    color: #05386B;
+`;
+
+const StyledI = styled.i`
+    padding: 2px;
+    color: #379683;
+`;
+
+const StyleCenter = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+    margin: 0 20px;
+    border-bottom: 1px solid #379683;
+`;
+
+const StyledButton = styled.button`
+    margin-left: 10px;
+    color: #ccc;
+    cursor: pointer;
+`;
+
+const StyleSpan = styled.span`
+    font-size: 20px;
+`;
+
+const StyleHeader = styled.div`
+    width: 90%;
+    padding: 10px;
+    height: 90px;
+    min-height: 90px;
+`;
+
+const StyledDivLevels = styled.div`
+    padding: 20px 0;
+    overflow-Y: auto;
 `;
 
 const levelPanel = (props) => {
+    const levels = props.levelsArray.map(item => (
+        <StyleCenter key={item}>
+            <StyleSpan>{"Level "+item}</StyleSpan>
+            <StyledButton alt="aaa" onClick={() => props.openLevel(item)}>
+                <StyledI className="fa fa-spinner"/>
+            </StyledButton>
+        </StyleCenter>
+    ))
     return(
         <StyledDiv>
             <StyledDivContent>
-                bbb
+                <StyleHeader>
+                    <StyledH1>DATA SCREEN</StyledH1>
+                </StyleHeader>
+                <StyledDivLevels>
+                    {levels}
+                </StyledDivLevels>
             </StyledDivContent>
         </StyledDiv>
     )

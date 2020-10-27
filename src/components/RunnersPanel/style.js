@@ -30,4 +30,8 @@ export const StyledTextDiv = styled.div`
     padding: 10px;
     height: 90px;
     min-height: 90px;
+    text-align: center;
+    color: #05386B;
+    font-weight: bold;
+    font-size: 30px;
 `;

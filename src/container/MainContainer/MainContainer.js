@@ -8,7 +8,9 @@ import ChangePositions from "../../components/ChangePositions/ChangePositions";
 import ChangeMatrixSize from "../ChangeMatrixSize/ChangeMatrixSize";
 import ChangeAlgorithms from "../ChangeAlgorithms/ChangeAlgorithms";
 import {connect} from "react-redux";
-import { bfs } from "../../algorithms/bfs";
+import { bfs} from "../../algorithms/bfs";
+import { dijkstra } from "../../algorithms/dijkstra";
+import { dfs } from "../../algorithms/dfs";
 import * as style from "./style";
 import * as actions from "../../store/actions/index";
 
@@ -93,9 +95,9 @@ class MainContainer extends Component{
         while(1){
             Xblock = this.getRandomInt(this.props.m);
             Yblock = this.getRandomInt(this.props.n);
-            let pomMatrixBFS = [...this.props.matrixBFS];
+            let pomMatrixBFS = [...this.props.matrixPATH];
             for(let i=0; i<pomMatrixBFS.length; i++){
-                pomMatrixBFS[i] = [...this.props.matrixBFS[i]];
+                pomMatrixBFS[i] = [...this.props.matrixPATH[i]];
             }
             if(pomMatrix[Yblock][Xblock] === 0){
                 pomMatrix[Yblock][Xblock] = 3;
@@ -123,28 +125,110 @@ class MainContainer extends Component{
         return pomMatrix;
     }
 
-    startRunningBFS = (obj) => {
+    openLevel = (level) => {
+        let t=0;
+        if(this.props.algorithms[0].checked){
+            const n=this.props.bfsArray.length;
+            for(let i=0; i<n; i++){
+                if(this.props.bfsArray[i].level === level){
+                    //dugme disabled
+                    //barijere nisu dobre za dati nivo, uzimaju se za poslednji samo
+                    setTimeout(() => {
+                    this.startRunning(this.props.bfsArray[i],"BFS",this.props.bfsArray[i].matrix);
+                    },(t++)*1500);
+                    break;
+                }
+            }
+        }
+    }
+
+    startRunning = (obj,alg,matrix) => {
         const rec = obj.reconstruction;
-        let mat = [...this.props.matrixBFS];
+        let mat = [...matrix];
         for(let i=0; i<mat.length; i++){
-            mat[i] = [...this.props.matrixBFS[i]];
+            mat[i] = [...matrix[i]];
         }
-        for(let i=1; i<rec.length-1; i++){
-            mat[rec[i].i][rec[i].j] = 4;
+        let matPath = [];
+        for(let i=0; i<this.props.n; i++){
+            matPath.push([]);
+            for(let j=0; j<this.props.m; j++){
+                matPath[i][j]=0;
+            }
         }
-        this.props.onSetMatrixBFS(mat);
+        let counter=1;
+        if(alg === "BFS"){
+            for(let i=1; i<rec.length-1; i++){
+                mat[rec[i].i][rec[i].j] = 4;
+                matPath[rec[i].i][rec[i].j] = counter++;
+            }
+        }
+        else if(alg === "DIJKSTRA"){
+            matPath = [];
+            for(let i=0; i<this.props.n; i++){
+                matPath.push([]);
+                for(let j=0; j<this.props.m; j++){
+                    matPath[i][j]=0;
+                }
+            }
+            counter=1;
+            for(let i=1; i<rec.length-1; i++){
+                mat[rec[i].i][rec[i].j] = 5;
+                matPath[rec[i].i][rec[i].j] = counter++;
+            }
+        }
+        else if(alg === "DFS"){
+            matPath = [];
+            for(let i=0; i<this.props.n; i++){
+                matPath.push([]);
+                for(let j=0; j<this.props.m; j++){
+                    matPath[i][j]=0;
+                }
+            }
+            counter=1;
+            for(let i=1; i<rec.length-1; i++){
+                mat[rec[i].i][rec[i].j] = 6;
+                matPath[rec[i].i][rec[i].j] = counter++;
+            }
+        }
+        this.props.onSetMatrixBFS(mat,alg,matPath);
     }
 
     runAlgorithms = () => {
+        let t=0;
         if(this.props.algorithms[0].checked){
-            let obj=bfs(this.props,null);
-            this.props.onBfs(obj);
-            this.startRunningBFS(obj);
+            setTimeout(() => {
+                let obj=bfs(this.props,null);
+                this.props.onBfs(obj);
+                this.props.onResetMatrixPATH();
+                this.startRunning(obj,"BFS",this.props.matrixPATH);
+                //console.log("BFS");
+            }, (t++)*1500);
+        }
+        if(this.props.algorithms[1].checked){
+            setTimeout(() => {
+                let obj=dfs(this.props);
+                this.props.onDfs(obj);
+                this.props.onResetMatrixPATH();
+                this.startRunning(obj,"DFS",this.props.matrixPATH);
+                //console.log("DFS");
+            }, (t++)*1500);
+        }
+        if(this.props.algorithms[2].checked){
+            setTimeout(() => {
+                let obj = dijkstra(this.props);
+                this.props.onDijkstra(obj);
+                this.props.onResetMatrixPATH();
+                this.startRunning(obj,"DIJKSTRA",this.props.matrixPATH);
+                //console.log("DIJKSTRA");
+            }, (t)*1500);
+        }
+        if(this.props.algorithms[4].checked){
+            console.log("floyd");
         }
 
         setTimeout(() => {
             this.props.onLevelFinish(this.newRandomBlock());
-        }, 1500);
+        }, (++t)*1500);
     }
 
     componentDidMount(){
@@ -215,7 +299,10 @@ class MainContainer extends Component{
                         clickedRun={this.props.clickedRun}
                         finish={this.props.finish}
                     />
-                    <LevelPanel />
+                    <LevelPanel 
+                        levelsArray={this.props.levelsArray}
+                        openLevel={this.openLevel}
+                    />
                     <RunnersPanel 
                         m={this.props.m}
                         n={this.props.n}
@@ -223,9 +310,11 @@ class MainContainer extends Component{
                         startY={this.props.startY}
                         endX={this.props.endX}
                         endY={this.props.endY}
-                        matrixBFS={this.props.matrixBFS}
+                        matrixBFS={this.props.matrixPATH}
                         clickedRun={this.props.clickedRun}
                         bfsArray={this.props.bfsArray}
+                        algorithmName={this.props.algorithmName}
+                        pathMATRIX={this.props.pathMATRIX}
                     />
                     {modalChangeLoaction}
                     {modalChangeSize}
@@ -251,8 +340,11 @@ const mapStateToProps = state => {
         level: state.level,
         bfsArray: state.bfsArray,
         clickedRun: state.clickedRun,
-        matrixBFS: state.matrixBFS,
-        finish: state.finish
+        matrixPATH: state.matrixPATH,
+        finish: state.finish,
+        algorithmName: state.algorithmName,
+        levelsArray: state.levelsArray,
+        pathMATRIX: state.pathMATRIX
     }
 }
 
@@ -263,9 +355,12 @@ const mapDispatchToProps = dispatch => {
         onSelectAlgorithms: (algorithms) => dispatch(actions.selectAlgorithms(algorithms)),
         onCreateConnectivityMatrix: () => dispatch(actions.createConnectivityMatrix()),
         onBfs: (obj) => dispatch(actions.bfs(obj)),
-        onSetMatrixBFS: (mat) => dispatch(actions.setMatrixBFS(mat)),
+        onSetMatrixBFS: (mat,alg,matPath) => dispatch(actions.setMatrixBFS(mat,alg,matPath)),
         onLevelFinish: (mat) => dispatch(actions.levelFinish(mat)),
-        onFinishGAME: () => dispatch(actions.finishGame())
+        onFinishGAME: () => dispatch(actions.finishGame()),
+        onDijkstra: (obj) => dispatch(actions.dijkstra(obj)),
+        onDfs: (obj) => dispatch(actions.dfs(obj)),
+        onResetMatrixPATH: () => dispatch(actions.resetMatrixPATH())
     }
 }
 

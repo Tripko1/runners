@@ -101,7 +101,8 @@ export const bfs = (state,mat) => {
             color: color,
             reconstruction: reconstruction,
             path: path,
-            level: state.level
+            level: state.level,
+            matrix: state.matrix
         }
     }
     return{

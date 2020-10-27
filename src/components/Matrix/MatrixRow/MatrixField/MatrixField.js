@@ -6,7 +6,8 @@ const StyledDiv = styled.div`
     width: ${props => props.height - 2}px;
     height: ${props => props.height - 2}px;
     background-color: ${props => props.value === 0 ? "#ccc" : props.value === 1 ? "#5cdb95" : props.value === 2 ?
-     "#5cdb95" : props.value === 3 ? "red" : "yellow"};
+    "#5cdb95" : props.value === 3 ? "red" : props.value === 4 ? "yellow" : props.value === 5 ?
+    "orange" : props.value === 6 ? "#ff80df" : props.value === 7 ? "#bf8040" : "#1ad1ff"};
     border: 1px solid #379683;
     border-radius: 5px;
     display: flex;
@@ -20,6 +21,10 @@ const StyledI = styled.i`
 `;
 
 const matrixField = (props) => {
+    let path=null;
+    if(props.pathMATRIX !== undefined && props.pathMATRIX !== 0){
+        path = <StyledI>{props.pathMATRIX}</StyledI>
+    }
     return(
             <StyledDiv 
                 height={props.height}
@@ -29,6 +34,7 @@ const matrixField = (props) => {
                     props.value === 2 ? <StyledI color={props.color} className="fa fa-flag-checkered"/> :
                     props.value === 3 ? <StyledI color={props.color} className="fa fa-tree"/> : null
                 }
+                {path}
             </StyledDiv>
     )
 }

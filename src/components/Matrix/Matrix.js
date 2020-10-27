@@ -12,6 +12,7 @@ const matrix = (props) => {
                 row={row}
                 n={props.n}
                 m={props.m}
+                pathMATRIX={props.pathMATRIX !== undefined ? props.pathMATRIX[i-1] : undefined}
              />) }
         </style.StyledDiv>
     );
