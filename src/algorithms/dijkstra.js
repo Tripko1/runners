@@ -91,6 +91,7 @@ export const dijkstra = (state) => {
         d: d,
         color: color,
         reconstruction: reconstruction,
-        level: state.level
+        level: state.level,
+        matrix: state.matrix
     }
 }

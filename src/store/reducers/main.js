@@ -45,6 +45,7 @@ const initialState = {
     finish: false,
     algorithmName: "",
     pathMATRIX: [],
+    rememberMatrix: []
 }
 
 const getRandomStart = (state,action) => {
@@ -283,6 +284,20 @@ const resetMatrixPath = (state, action) => {
     })
 }
 
+const finishTestLvl = (state, action) => {
+    return updateObject(state,{
+        algorithmName: "",
+        clickedRun: false,
+        matrixPATH: state.rememberMatrix
+    })
+}
+
+const rememberMainMat = (state, action) => {
+    return updateObject(state,{
+        rememberMatrix: state.matrixPATH
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_RANDOM_POSITIONS_START:
@@ -326,7 +341,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.DFS_SUCCESS:
             return dfsSuccess(state,action);
         case actionTypes.RESET_MATRIX_PATH_SUCCESS:
-            return resetMatrixPath(state,action);    
+            return resetMatrixPath(state,action);
+        case actionTypes.FINISH_TEST_LEVEL_SUCCESS:
+            return finishTestLvl(state,action);
+        case actionTypes.REMEMBER_MAIN_MATRIX_SUCCESS:
+            return rememberMainMat(state, action);
         default: return state;
     }
 }
