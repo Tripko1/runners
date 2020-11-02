@@ -224,3 +224,27 @@ export const resetMatrixPATH = () => {
         dispatch(resetMatrixPath_success());
     }
 }
+
+export const finishTestLevel_success = () => {
+    return{
+        type: actionTypes.FINISH_TEST_LEVEL_SUCCESS
+    }
+}
+
+export const finishTestLevel = () => {
+    return dispatch => {
+        dispatch(finishTestLevel_success());
+    }
+}
+
+export const rememberMainMatrix_success = () => {
+    return{
+        type: actionTypes.REMEMBER_MAIN_MATRIX_SUCCESS
+    }
+}
+
+export const rememberMainMatrix = () => {
+    return dispatch => {
+        dispatch(rememberMainMatrix_success());
+    }
+}

@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React from "react";
 import styled from "styled-components";
 import MainContainer from "./container/MainContainer/MainContainer";
 
@@ -14,14 +14,12 @@ const StyledDiv = styled.div`
   background-color: #EDF5E1;
 `;
 
-class App extends Component{
-	render(){
+const App = props => {
 		return(
 			<StyledDiv>
 				<MainContainer/>
 			</StyledDiv>
 		);
-	}
 }
 
 export default App;

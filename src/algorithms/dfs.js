@@ -98,6 +98,7 @@ export const dfs = (state) => {
         d: d,
         f: f,
         pi: pi,
-        level: state.level
+        level: state.level,
+        matrix: state.matrix
     }
 }

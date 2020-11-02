@@ -9,5 +9,7 @@ export {
     finishGame,
     dijkstra,
     dfs,
-    resetMatrixPATH
+    resetMatrixPATH,
+    finishTestLevel,
+    rememberMainMatrix
 } from "./main";
